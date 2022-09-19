@@ -11,6 +11,20 @@ export default class TodoApp extends HTMLElement {
 
   getTemplate() {
     return `
+        <style>
+        .header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          background-color: black;
+          color: white;
+        }
+        .main {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+        }
+        </style>
         <header class="header">
           <span>TODO 서비스</span>
           <span class="header__menu">menu</span>
