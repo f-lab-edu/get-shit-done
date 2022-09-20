@@ -12,11 +12,17 @@ export default class TodoToolbar extends HTMLElement {
   getTemplate() {
     return `
         <style>
+          :host {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 10px;
+          }
           .count-item {
             width: 20px;
             height: 20px;
             text-align: center;
-            background-color: gray;
+            background-color: lightgray;
             border-radius: 50%;
           }
         </style>

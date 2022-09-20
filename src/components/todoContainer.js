@@ -12,14 +12,15 @@ export default class TodoContainer extends HTMLElement {
   getTemplate() {
     return `
         <style>
-          todo-toolbar {
+          :host {
             display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            padding: 10px;
-          }
-          todo-note {
-            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #ebebeb;
+            width: 30vw;
+            height: 70vh;
+            margin: 5px;
+            border-radius: 5px;
           }
           todo-list {
             display: flex;

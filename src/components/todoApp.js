@@ -25,16 +25,6 @@ export default class TodoApp extends HTMLElement {
           flex-direction: row;
           justify-content: flex-start;
         }
-        todo-container[class^='todo-container'] {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          background-color: lightgray;
-          width: 30vw;
-          height: 70vh;
-          margin: 5px;
-          border-radius: 5px;
-        }
         </style>
         <header class="header">
           <span>TODO 서비스</span>
