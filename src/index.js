@@ -3,3 +3,4 @@ import './components/todoApp';
 import './components/todoContainer';
 import './components/todoToolbar';
 import './components/todoNote';
+import './components/todoItem';
