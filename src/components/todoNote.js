@@ -1,12 +1,12 @@
 export default class TodoNote extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: 'open' });
     this.render();
   }
 
   render() {
-    this.shadow.innerHTML = this.getTemplate();
+    this.shadowRoot.innerHTML = this.getTemplate();
   }
 
   getTemplate() {
@@ -40,6 +40,7 @@ export default class TodoNote extends HTMLElement {
           .note-cancel-button {
             width: 45%;
             text-align: center;
+            background-color: #f8863c;
             border-radius: 5px;
             border: 1px solid gray;
           }
@@ -52,7 +53,12 @@ export default class TodoNote extends HTMLElement {
     `;
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    const $noteAddButton = this.shadowRoot.querySelector('.note-add-button');
+    $noteAddButton.addEventListener('click', () =>
+      console.log('Add 이벤트 테스트')
+    );
+  }
   disconnectedCallback() {}
 
   static get observedAttributes() {

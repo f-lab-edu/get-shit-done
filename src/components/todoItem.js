@@ -1,12 +1,12 @@
 export default class TodoItem extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: 'open' });
     this.render();
   }
 
   render() {
-    this.shadow.innerHTML = this.getTemplate();
+    this.shadowRoot.innerHTML = this.getTemplate();
   }
 
   getTemplate() {
@@ -15,20 +15,31 @@ export default class TodoItem extends HTMLElement {
           :host {
             display: flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: space-around;
+            align-items: flex-start;
             background-color: white;
+            border: 1px solid black;
             border-radius: 5px;
+            margin: 10px;
+            padding: 5px;
+          }
+          .item-writer {
+            font-size: 14px;
+            padding-top: 5px;
+          }
+          .writer {
+            font-size: 12px;
+            color: #a5a5a5;
+
           }
         </style>
-        <div class="item-icon">
-          <i class="fa-light fa-calendar-lines"></i>
-        </div>
+
+        <div class="item-icon">📝</div>
         <div class="item-information">
-          <p class="item-content">헬스 1시간 반</p>
-          <p class="item-writer">Added by<span class="writer"></span></p>
+          <div class="item-content">헬스 1시간 반</div>
+          <div class="item-writer">Added by <span class="writer">Jayden</span></div>
         </div>
         <div class="item-delete-button">X</div>
-        <script src="https://kit.fontawesome.com/5a97a57cc7.js" crossorigin="anonymous"></script>
     `;
   }
 

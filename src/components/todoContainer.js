@@ -1,12 +1,12 @@
 export default class TodoContainer extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: 'open' });
     this.render();
   }
 
   render() {
-    this.shadow.innerHTML = this.getTemplate();
+    this.shadowRoot.innerHTML = this.getTemplate();
   }
 
   getTemplate() {
@@ -16,9 +16,9 @@ export default class TodoContainer extends HTMLElement {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            background-color: #ebebeb;
+            background-color: #f1f1f1;
             width: 30vw;
-            height: 70vh;
+            height: 85vh;
             margin: 5px;
             border-radius: 5px;
           }

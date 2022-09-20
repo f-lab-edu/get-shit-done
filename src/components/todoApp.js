@@ -1,12 +1,12 @@
 export default class TodoApp extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: 'open' });
+    this.attachShadow({ mode: 'open' });
     this.render();
   }
 
   render() {
-    this.shadow.innerHTML = this.getTemplate();
+    this.shadowRoot.innerHTML = this.getTemplate();
   }
 
   getTemplate() {
@@ -16,7 +16,7 @@ export default class TodoApp extends HTMLElement {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
-          background-color: black;
+          background-color: #202632;
           color: white;
           padding: 5px 10px;
         }
