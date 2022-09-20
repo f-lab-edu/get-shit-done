@@ -18,11 +18,22 @@ export default class TodoApp extends HTMLElement {
           justify-content: space-between;
           background-color: black;
           color: white;
+          padding: 5px 10px;
         }
         .main {
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
+        }
+        todo-container[class^='todo-container'] {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          background-color: lightgray;
+          width: 30vw;
+          height: 70vh;
+          margin: 5px;
+          border-radius: 5px;
         }
         </style>
         <header class="header">
@@ -30,9 +41,9 @@ export default class TodoApp extends HTMLElement {
           <span class="header__menu">menu</span>
         </header>
         <main class="main">
-          <todo-container></todo-container>
-          <todo-container></todo-container>
-          <todo-container></todo-container>
+          <todo-container class="todo-container--will-do"></todo-container>
+          <todo-container class="todo-container--doing"></todo-container>
+          <todo-container class="todo-container--done"></todo-container>
         </main>
     `;
   }
