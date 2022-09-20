@@ -16,6 +16,10 @@ export default class TodoContainer extends HTMLElement {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
+            padding: 10px;
+          }
+          todo-note {
+            display: none;
           }
           todo-list {
             display: flex;
@@ -24,6 +28,7 @@ export default class TodoContainer extends HTMLElement {
           }
         </style>
         <todo-toolbar></todo-toolbar>
+        <todo-note></todo-note>
         <todo-list></todo-list>
     `;
   }
