@@ -82,7 +82,7 @@ export default class TodoItem extends HTMLElement {
           color: white;
           text-align: center;
         }
-        .modal-close-button:hover {
+        .item-delete-button:hover, .modal-close-button:hover {
           color: #f8863c;
         }
       </style>
@@ -149,6 +149,29 @@ export default class TodoItem extends HTMLElement {
       this.shadowRoot.querySelector('.item-modal-outer').style.display =
         'block';
       this.shadowRoot.querySelector('.item-modal-inner').style.display = 'flex';
+    });
+
+    // 4. 모달 창 X 클릭 시 모달 닫기
+    const $modalCloseButton = this.shadowRoot.querySelector(
+      '.modal-close-button'
+    );
+    const $modalInner = this.shadowRoot.querySelector('.item-modal-inner');
+    const $modalOuter = this.shadowRoot.querySelector('.item-modal-outer');
+
+    $modalCloseButton.addEventListener('click', (event) => {
+      $modalInner.style.display = 'none';
+      $modalOuter.style.display = 'none';
+    });
+
+    // 5. 모달 창 save button 클릭 시 내용 변경
+    const $modalSaveButton =
+      this.shadowRoot.querySelector('.modal-save-button');
+    const $modalInput = this.shadowRoot.querySelector('.modal-input');
+    const $itemContent = this.shadowRoot.querySelector('.item-content');
+    $modalSaveButton.addEventListener('click', (event) => {
+      $modalInner.style.display = 'none';
+      $modalOuter.style.display = 'none';
+      $itemContent.textContent = $modalInput.value;
     });
   }
   disconnectedCallback() {}
