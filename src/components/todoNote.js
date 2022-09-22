@@ -13,7 +13,7 @@ export default class TodoNote extends HTMLElement {
     return `
         <style>
           :host {
-            display: flex; // none;
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
@@ -54,10 +54,28 @@ export default class TodoNote extends HTMLElement {
   }
 
   connectedCallback() {
+    // Add 버튼 클릭 시 새로운 메모 생성
     const $noteAddButton = this.shadowRoot.querySelector('.note-add-button');
-    $noteAddButton.addEventListener('click', () =>
-      console.log('Add 이벤트 테스트')
+    const $noteInput = this.shadowRoot.querySelector('.note-input');
+    $noteAddButton.addEventListener('click', (event) => {
+      const $todoItem = document.createElement('todo-item');
+      $todoItem.dataset.itemTitle = $noteInput.value;
+      this.nextElementSibling.shadowRoot.append($todoItem);
+
+      // 메모 추가 후 입력칸 초기화
+      $noteInput.value = '';
+    });
+
+    // Cancel 버튼 클릭 시 todoNote 닫기
+    const $noteCancelButton = this.shadowRoot.querySelector(
+      '.note-cancel-button'
     );
+    $noteCancelButton.addEventListener('click', (event) => {
+      this.style.display = 'none';
+
+      // 메모 닫은 후 입력칸 초기화
+      $noteInput.value = '';
+    });
   }
   disconnectedCallback() {}
 

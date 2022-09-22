@@ -36,14 +36,18 @@ export default class TodoItem extends HTMLElement {
 
         <div class="item-icon">📝</div>
         <div class="item-information">
-          <div class="item-content">헬스 1시간 반</div>
+          <div class="item-content">타이틀</div>
           <div class="item-writer">Added by <span class="writer">Jayden</span></div>
         </div>
         <div class="item-delete-button">X</div>
     `;
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    // todo-item이 생성되고 DOM에 추가될 때 그 안에 텍스트를 바꿔주기
+    this.shadowRoot.querySelector('.item-content').textContent =
+      this.dataset.itemTitle;
+  }
   disconnectedCallback() {}
 
   static get observedAttributes() {

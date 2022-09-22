@@ -12,13 +12,13 @@ export default class TodoList extends HTMLElement {
   getTemplate() {
     return `
         <style>
+        :host {
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
+        }
         </style>
-        <todo-item></todo-item>
-        <todo-item></todo-item>
-        <todo-item></todo-item>
+        
     `;
   }
 

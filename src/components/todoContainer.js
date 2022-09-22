@@ -22,13 +22,8 @@ export default class TodoContainer extends HTMLElement {
             margin: 5px;
             border-radius: 5px;
           }
-          todo-list {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-          }
         </style>
-        <todo-toolbar></todo-toolbar>
+        <todo-toolbar data-container-title="${this.dataset.containerTitle}"></todo-toolbar>
         <todo-note></todo-note>
         <todo-list></todo-list>
     `;

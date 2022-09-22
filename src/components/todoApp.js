@@ -31,9 +31,9 @@ export default class TodoApp extends HTMLElement {
           <span class="header__menu">menu</span>
         </header>
         <main class="main">
-          <todo-container class="todo-container--will-do"></todo-container>
-          <todo-container class="todo-container--doing"></todo-container>
-          <todo-container class="todo-container--done"></todo-container>
+          <todo-container data-container-title="해야할일"></todo-container>
+          <todo-container data-container-title="하는중"></todo-container>
+          <todo-container data-container-title="완료"></todo-container>
         </main>
     `;
   }

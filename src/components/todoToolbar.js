@@ -27,13 +27,25 @@ export default class TodoToolbar extends HTMLElement {
           }
         </style>
         <div class="count-item">1</div>
-        <div class="container-name">해야할 일</div>
+        <div class="container-name">${this.dataset.containerTitle}</div>
         <div class="open-note-button">+</div>
         <div class="delete-container-button">X</div>
     `;
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    // 툴바 + 버튼 클릭 시, todoNote open/close
+    const $openNoteButton = this.shadowRoot.querySelector('.open-note-button');
+    const $todoNote = this.nextElementSibling;
+
+    $openNoteButton.addEventListener('click', (event) => {
+      if ($todoNote.style.display === 'none') {
+        $todoNote.style.display = 'flex';
+      } else {
+        $todoNote.style.display = 'none';
+      }
+    });
+  }
   disconnectedCallback() {}
 
   static get observedAttributes() {
