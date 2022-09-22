@@ -54,26 +54,35 @@ export default class TodoNote extends HTMLElement {
   }
 
   connectedCallback() {
-    // Add 버튼 클릭 시 새로운 메모 생성
+    // 1. Add 버튼 클릭 시 새로운 메모 생성
     const $noteAddButton = this.shadowRoot.querySelector('.note-add-button');
     const $noteInput = this.shadowRoot.querySelector('.note-input');
     $noteAddButton.addEventListener('click', (event) => {
+      // 1-1. input이 없을 때는 메모 생성 막기
+      if (!$noteInput.value) return;
+
       const $todoItem = document.createElement('todo-item');
+      $todoItem.dataset.containerTitle = this.dataset.containerTitle;
       $todoItem.dataset.itemTitle = $noteInput.value;
       this.nextElementSibling.shadowRoot.append($todoItem);
 
-      // 메모 추가 후 입력칸 초기화
+      // 1-2. 메모 추가 후 입력칸 초기화
       $noteInput.value = '';
+
+      // 1-3. 메모 갯수 더하기
+      const $noteCount =
+        this.previousElementSibling.shadowRoot.querySelector('.count-item');
+      $noteCount.textContent = +$noteCount.textContent + 1;
     });
 
-    // Cancel 버튼 클릭 시 todoNote 닫기
+    // 2. Cancel 버튼 클릭 시 todoNote 닫기
     const $noteCancelButton = this.shadowRoot.querySelector(
       '.note-cancel-button'
     );
     $noteCancelButton.addEventListener('click', (event) => {
       this.style.display = 'none';
 
-      // 메모 닫은 후 입력칸 초기화
+      // 2-1. 메모 닫은 후 입력칸 초기화
       $noteInput.value = '';
     });
   }

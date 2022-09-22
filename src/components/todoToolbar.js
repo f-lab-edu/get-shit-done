@@ -26,7 +26,7 @@ export default class TodoToolbar extends HTMLElement {
             border-radius: 50%;
           }
         </style>
-        <div class="count-item">1</div>
+        <div class="count-item">0</div>
         <div class="container-name">${this.dataset.containerTitle}</div>
         <div class="open-note-button">+</div>
         <div class="delete-container-button">X</div>

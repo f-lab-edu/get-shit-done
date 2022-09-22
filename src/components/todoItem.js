@@ -44,9 +44,32 @@ export default class TodoItem extends HTMLElement {
   }
 
   connectedCallback() {
-    // todo-item이 생성되고 DOM에 추가될 때 그 안에 텍스트를 바꿔주기
+    // 1. item이 생성되고 DOM에 추가될 때 그 안에 텍스트를 바꿔주기
     this.shadowRoot.querySelector('.item-content').textContent =
       this.dataset.itemTitle;
+
+    // 2. item X button 클릭 시 item 삭제 및 count 빼기
+    const $itemDeleteButton = this.shadowRoot.querySelector(
+      '.item-delete-button'
+    );
+    $itemDeleteButton.addEventListener('click', (event) => {
+      // 2-1. item 삭제
+      this.remove();
+
+      // 2-2. count 빼기
+      // 다시 체크: shadow dom 바깥으로 가는 다른 루트는 없는지 확인
+      const containerTitle = this.dataset.containerTitle;
+      const $noteCount = document
+        .querySelector('todo-app')
+        .shadowRoot.querySelector(
+          `[
+            data-container-title=${containerTitle}
+          ]`
+        )
+        .shadowRoot.querySelector('todo-toolbar')
+        .shadowRoot.querySelector('.count-item');
+      $noteCount.textContent = +$noteCount.textContent - 1;
+    });
   }
   disconnectedCallback() {}
 

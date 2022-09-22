@@ -24,8 +24,8 @@ export default class TodoContainer extends HTMLElement {
           }
         </style>
         <todo-toolbar data-container-title="${this.dataset.containerTitle}"></todo-toolbar>
-        <todo-note></todo-note>
-        <todo-list></todo-list>
+        <todo-note data-container-title="${this.dataset.containerTitle}"></todo-note>
+        <todo-list data-container-title="${this.dataset.containerTitle}"></todo-list>
     `;
   }
 
