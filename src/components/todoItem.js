@@ -15,13 +15,22 @@ export default class TodoItem extends HTMLElement {
         :host {
           display: flex;
           flex-direction: row;
-          justify-content: space-around;
+          justify-content: flex-start;
           align-items: flex-start;
           background-color: white;
           border: 1px solid black;
           border-radius: 5px;
-          margin: 10px;
-          padding: 5px;
+          margin: 1vh 1vw;
+          padding: 1vw;
+        }
+        .item-information {
+          width: 20vw;
+          position: relative;
+          left: 1vw;
+        }
+        .item-delete-button {
+          position: relative;
+          left: 3vw;
         }
         .item-writer {
           font-size: 14px;
@@ -87,9 +96,9 @@ export default class TodoItem extends HTMLElement {
         }
       </style>
 
-      <div class="item-icon">📝</div>
+      <div class="item-icon">🗒️</div>
       <div class="item-information">
-        <div class="item-content">타이틀</div>
+        <div class="item-content"></div>
         <div class="item-writer">
           Added by <span class="writer">Jayden</span>
         </div>

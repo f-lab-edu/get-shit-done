@@ -37,6 +37,7 @@ export default class TodoNote extends HTMLElement {
             border-radius: 5px;
             color: white;
             font-weight: bold;
+            opacity: 50%;
           }
           .note-cancel-button {
             width: 45%;
@@ -47,7 +48,7 @@ export default class TodoNote extends HTMLElement {
             font-weight: bold;
           }
         </style>
-        <textarea class="note-input" placeholder="Enter a note"></textarea>
+        <textarea class="note-input" placeholder="Get shit done"></textarea>
         <div class="note-buttons">
           <div class="note-add-button">Add</div>
           <div class="note-cancel-button">Cancel</div>
@@ -75,6 +76,9 @@ export default class TodoNote extends HTMLElement {
       const $noteCount =
         this.previousElementSibling.shadowRoot.querySelector('.count-item');
       $noteCount.textContent = +$noteCount.textContent + 1;
+
+      // 1-4. Add 버튼 비활성화
+      $noteAddButton.style.opacity = '50%';
     });
 
     // 2. Cancel 버튼 클릭 시 todoNote 닫기
@@ -86,6 +90,11 @@ export default class TodoNote extends HTMLElement {
 
       // 2-1. 메모 닫은 후 입력칸 초기화
       $noteInput.value = '';
+    });
+
+    // 3. 메모 입력 시 Add 버튼 활성화
+    $noteInput.addEventListener('input', (event) => {
+      $noteAddButton.style.opacity = '100%';
     });
   }
   disconnectedCallback() {}
