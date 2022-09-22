@@ -17,6 +17,7 @@ export default class TodoToolbar extends HTMLElement {
             flex-direction: row;
             justify-content: space-around;
             padding: 10px;
+            font-weight: bold;
           }
           .count-item {
             width: 20px;
@@ -24,6 +25,7 @@ export default class TodoToolbar extends HTMLElement {
             text-align: center;
             background-color: lightgray;
             border-radius: 50%;
+            line-height: 20px;
           }
         </style>
         <div class="count-item">0</div>

@@ -36,6 +36,7 @@ export default class TodoNote extends HTMLElement {
             border: 1px solid gray;
             border-radius: 5px;
             color: white;
+            font-weight: bold;
           }
           .note-cancel-button {
             width: 45%;
@@ -43,6 +44,7 @@ export default class TodoNote extends HTMLElement {
             background-color: #f8863c;
             border-radius: 5px;
             border: 1px solid gray;
+            font-weight: bold;
           }
         </style>
         <textarea class="note-input" placeholder="Enter a note"></textarea>

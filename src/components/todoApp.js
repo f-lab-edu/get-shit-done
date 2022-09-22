@@ -3,6 +3,8 @@ export default class TodoApp extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.render();
+    // 추후 container 생성 버튼 개발 시 참고
+    this.containerTitleList = [];
   }
 
   render() {
