@@ -3,8 +3,6 @@ export default class TodoApp extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.render();
-    // 추후 container 생성 버튼 개발 시 참고
-    this.containerTitleList = [];
   }
 
   render() {
@@ -18,29 +16,60 @@ export default class TodoApp extends HTMLElement {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
+          padding: 1vh 2vw;
+          border-radius: 5px;
           background-color: #202632;
           color: white;
-          padding: 5px 10px;
+          font-weight: bold;
         }
         .main {
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
         }
+        .create-container-button {
+          height: 85vh;
+          margin: 1vh 0.5vw;
+          border: 3px dashed #202632;
+          border-radius: 5px;
+          flex-grow: 1;
+          text-align: center;
+          line-height: 85vh;
+          font-size: 1.5vw;
+          font-weight: bold;
+          color: #202632;
+        }
         </style>
         <header class="header">
-          <span>TODO 서비스</span>
-          <span class="header__menu">menu</span>
+          <span>Just Do it!</span>
+          <span class="header__menu">Menu</span>
         </header>
         <main class="main">
           <todo-container data-container-title="해야할일"></todo-container>
-          <todo-container data-container-title="하는중"></todo-container>
-          <todo-container data-container-title="완료"></todo-container>
+          <div class="create-container-button">+ Add Container</div>
         </main>
     `;
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    // 1. create-container-button 클릭 시 컨테이너 생성
+    const $createContainerButton = this.shadowRoot.querySelector(
+      '.create-container-button'
+    );
+    const $appMain = this.shadowRoot.querySelector('.main');
+    $createContainerButton.addEventListener('click', (event) => {
+      const containerTitleInput = prompt('메모장 이름을 적어주세요. 💥');
+      if (!containerTitleInput) return;
+      const $newContainer = document.createElement('todo-container');
+      $newContainer.dataset.containerTitle = containerTitleInput;
+      $appMain.insertBefore($newContainer, $createContainerButton);
+
+      // 1-1. 메모 컨테이너 5개 이상 시, Add column 삭제
+      if ($appMain.children.length >= 6) {
+        $createContainerButton.style.display = 'none';
+      }
+    });
+  }
   disconnectedCallback() {}
 
   static get observedAttributes() {

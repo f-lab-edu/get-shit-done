@@ -36,7 +36,7 @@ export default class TodoToolbar extends HTMLElement {
   }
 
   connectedCallback() {
-    // 툴바 + 버튼 클릭 시, todoNote open/close
+    // 1. 툴바 + 버튼 클릭 시, note 열기/닫기
     const $openNoteButton = this.shadowRoot.querySelector('.open-note-button');
     const $todoNote = this.nextElementSibling;
 
@@ -47,6 +47,35 @@ export default class TodoToolbar extends HTMLElement {
         $todoNote.style.display = 'none';
       }
     });
+
+    // 2. X 버튼 클릭 시, container 삭제
+    const $deleteContainerButton = this.shadowRoot.querySelector(
+      '.delete-container-button'
+    );
+    $deleteContainerButton.addEventListener('click', (event) => {
+      if (!confirm('정말 삭제하시겠습니까?')) return;
+      const containerTitle = this.dataset.containerTitle;
+      const $todoApp = document.querySelector('todo-app');
+      const $containerSelected = $todoApp.shadowRoot.querySelector(
+        `[
+            data-container-title=${containerTitle}
+          ]`
+      );
+      $containerSelected.remove();
+
+      // 2-1. 컨테이너 5개 미만일 때, add column 재생성
+      const $appMain = $todoApp.shadowRoot.querySelector('.main');
+      const $createContainerButton = $appMain.querySelector(
+        '.create-container-button'
+      );
+      if ($createContainerButton.style.display === 'none') {
+        $createContainerButton.style.display = 'block';
+      }
+    });
+
+    // 3. add column 클릭 시 입력값을 name으로 갖는 container 생성
+    const $containerName = this.shadowRoot.querySelector('.container-name');
+    $containerName.textContent = this.dataset.containerTitle;
   }
   disconnectedCallback() {}
 

@@ -17,19 +17,23 @@ export default class TodoContainer extends HTMLElement {
             flex-direction: column;
             justify-content: flex-start;
             background-color: #f1f1f1;
-            width: 30vw;
+            flex-grow: 1;
             height: 85vh;
-            margin: 5px;
+            margin: 1vh 0.5vw;
             border-radius: 5px;
           }
         </style>
-        <todo-toolbar data-container-title="${this.dataset.containerTitle}"></todo-toolbar>
+        <todo-toolbar class="todo-toolbar" data-container-title="${this.dataset.containerTitle}"></todo-toolbar>
         <todo-note data-container-title="${this.dataset.containerTitle}"></todo-note>
         <todo-list data-container-title="${this.dataset.containerTitle}"></todo-list>
     `;
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    const containerTitle = this.dataset.containerTitle;
+    const $toolBar = this.shadowRoot.querySelector('.todo-toolbar');
+    $toolBar.dataset.containerTitle = containerTitle;
+  }
   disconnectedCallback() {}
 
   static get observedAttributes() {
