@@ -45,7 +45,6 @@ export default class TodoApp extends HTMLElement {
           <span class="header__menu">Menu</span>
         </header>
         <main class="main">
-          <todo-container data-container-title="해야할일"></todo-container>
           <div class="create-container-button">+ Add Container</div>
         </main>
     `;

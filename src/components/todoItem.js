@@ -24,13 +24,13 @@ export default class TodoItem extends HTMLElement {
           padding: 1vw;
         }
         .item-information {
-          width: 20vw;
+          width: 60%;
           position: relative;
           left: 1vw;
         }
         .item-delete-button {
           position: relative;
-          left: 3vw;
+          left: 30%;
         }
         .item-writer {
           font-size: 14px;

@@ -13,9 +13,11 @@ export default class TodoList extends HTMLElement {
     return `
         <style>
         :host {
+          width: 100%;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
+          margin: 0 auto;
         }
         </style>
         
