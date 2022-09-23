@@ -94,7 +94,8 @@ export default class TodoNote extends HTMLElement {
 
     // 3. 메모 입력 시 Add 버튼 활성화
     $noteInput.addEventListener('input', (event) => {
-      $noteAddButton.style.opacity = '100%';
+      $noteAddButton.style.opacity =
+        event.target.value.length === 0 ? '50%' : '100%';
     });
   }
   disconnectedCallback() {}
