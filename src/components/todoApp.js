@@ -76,7 +76,7 @@ export class TodoApp extends HTMLElement {
         }
         .record {
           width: 100%;
-          height: 8%;
+          height: 10%;
           margin-bottom: 1vh;
           border-bottom: 1px solid black;
         }

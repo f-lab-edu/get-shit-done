@@ -195,6 +195,16 @@ export default class TodoItem extends HTMLElement {
     $modalSaveButton.addEventListener('click', (event) => {
       $modalInner.style.display = 'none';
       $modalOuter.style.display = 'none';
+
+      // 5-1. 활동 기록에 수정 활동 추가
+      const $record = document.createElement('div');
+      $record.className = 'record';
+      $record.innerHTML = `<span class="record-important">@Jayden</span> changed <b>${$itemContent.textContent}</b> to <span class="record-important">${$modalInput.value}</span> in <b>${this.dataset.containerTitle}</b>`;
+
+      const now = Date.now();
+      $record.dataset.timeMakeNote = now;
+      activityLog.push($record);
+
       $itemContent.textContent = $modalInput.value;
     });
 
