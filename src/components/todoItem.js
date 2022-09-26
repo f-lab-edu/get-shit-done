@@ -1,3 +1,4 @@
+import { activityLog } from './todoApp';
 export default class TodoItem extends HTMLElement {
   constructor() {
     super();
@@ -151,6 +152,15 @@ export default class TodoItem extends HTMLElement {
         .shadowRoot.querySelector('todo-toolbar')
         .shadowRoot.querySelector('.count-item');
       $noteCount.textContent = +$noteCount.textContent - 1;
+
+      // 2-3. 활동 기록에 삭제 활동 추가
+      const $record = document.createElement('div');
+      $record.className = 'record';
+      $record.innerHTML = `<span class="record-important">@Jayden</span> deleted <span class="record-important">${this.dataset.itemTitle}</span> from <b>${this.dataset.containerTitle}</b>`;
+
+      const now = Date.now();
+      $record.dataset.timeMakeNote = now;
+      activityLog.push($record);
     });
 
     // 3. 아이템 더블 클릭 시 수정 모달 생성
@@ -172,7 +182,7 @@ export default class TodoItem extends HTMLElement {
       $modalOuter.style.display = 'none';
       $modalInner.querySelector('.modal-input').value = this.dataset.itemTitle;
     });
-    $modalOuter.addEventListener('click', (event) => {
+    $modalCloseButton.addEventListener('click', (event) => {
       $modalInner.style.display = 'none';
       $modalOuter.style.display = 'none';
       $modalInner.querySelector('.modal-input').value = this.dataset.itemTitle;

@@ -76,13 +76,17 @@ export class TodoApp extends HTMLElement {
         }
         .record {
           width: 100%;
-          height: 10%;
+          height: 8%;
           margin-bottom: 1vh;
           border-bottom: 1px solid black;
         }
         .record-important {
           font-weight: bold;
           color: #00c471;
+        }
+        .record-time {
+          color: #d3d3d3;
+          font-size: 12px;
         }
         </style>
         <header class="header">
@@ -133,6 +137,7 @@ export class TodoApp extends HTMLElement {
       const now = Date.now();
       activityLog.forEach(($record) => {
         const $recordTime = document.createElement('p');
+        $recordTime.className = 'record-time';
         const timeDifferenceSeconds = Math.floor(
           (now - +$record.dataset.timeMakeNote) / 1000
         );
