@@ -1,3 +1,4 @@
+import { activityLog } from './todoApp';
 export default class TodoNote extends HTMLElement {
   constructor() {
     super();
@@ -71,16 +72,26 @@ export default class TodoNote extends HTMLElement {
       $todoItem.dataset.itemTitle = $noteInput.value;
       this.nextElementSibling.shadowRoot.append($todoItem);
 
-      // 1-2. 메모 추가 후 입력칸 초기화
-      $noteInput.value = '';
-
-      // 1-3. 메모 갯수 더하기
+      // 1-2. 메모 갯수 더하기
       const $noteCount =
         this.previousElementSibling.shadowRoot.querySelector('.count-item');
       $noteCount.textContent = +$noteCount.textContent + 1;
 
-      // 1-4. Add 버튼 비활성화
+      // 1-3. Add 버튼 비활성화
       $noteAddButton.style.opacity = '50%';
+
+      // 1-4. Add 사용자 활동 기록
+      const $record = document.createElement('div');
+      $record.className = 'record';
+      $record.innerHTML = `<span class="record-important">@Jayden</span> added <span class="record-important">${$noteInput.value}</span> to <span class="record-important">${this.dataset.containerTitle}</span>`;
+
+      const now = Date.now();
+      $record.dataset.timeMakeNote = now;
+
+      activityLog.push($record);
+
+      // 1-5. Add 버튼 클릭 후 입력칸 초기화
+      $noteInput.value = '';
     });
 
     // 2. Cancel 버튼 클릭 시 todoNote 닫기

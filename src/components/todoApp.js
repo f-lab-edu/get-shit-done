@@ -1,4 +1,5 @@
-export default class TodoApp extends HTMLElement {
+export const activityLog = [];
+export class TodoApp extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -39,6 +40,50 @@ export default class TodoApp extends HTMLElement {
           font-weight: bold;
           color: #202632;
         }
+        .activity {
+          width: 40vw;
+          height: 100vh;
+          top: 0;
+          right: 0;
+          position: fixed;
+          display: none;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          padding: 1vh 1vw;
+          background-color: #f1f1f1;
+          z-index: 1;
+
+        }
+        .activity__header {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid black;
+          background-color: #f1f1f1;
+        }
+        .activity__main {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column-reverse;
+          justify-content: flex-end;
+          align-items: center;
+          padding: 1vh 1vw;
+          background-color: white;
+        }
+        .record {
+          width: 100%;
+          height: 10%;
+          margin-bottom: 1vh;
+          border-bottom: 1px solid black;
+        }
+        .record-important {
+          font-weight: bold;
+          color: #00c471;
+        }
         </style>
         <header class="header">
           <span>Just Do it!</span>
@@ -47,6 +92,12 @@ export default class TodoApp extends HTMLElement {
         <main class="main">
           <div class="create-container-button">+ Add Container</div>
         </main>
+        <aside class="activity">
+          <div class="activity__header">
+            <div>📓 Activity</div><div class="activity__close-button">X</div>
+          </div>
+          <div class="activity__main"></div>
+        </aside>
     `;
   }
 
@@ -71,6 +122,45 @@ export default class TodoApp extends HTMLElement {
       if ($appMain.children.length >= 6) {
         $createContainerButton.style.display = 'none';
       }
+    });
+
+    // 2. Menu 클릭 시 사용 기록 보기
+    const $menuButton = this.shadowRoot.querySelector('.header__menu');
+    const $activity = this.shadowRoot.querySelector('.activity');
+    const $activityMain = this.shadowRoot.querySelector('.activity__main');
+    $menuButton.addEventListener('click', (event) => {
+      $activity.style.display = 'flex';
+      const now = Date.now();
+      activityLog.forEach(($record) => {
+        const $recordTime = document.createElement('p');
+        const timeDifferenceSeconds = Math.floor(
+          (now - +$record.dataset.timeMakeNote) / 1000
+        );
+        const timeDifferenceMinutes = Math.floor(timeDifferenceSeconds / 60);
+        const timeDifferenceHours = Math.floor(timeDifferenceMinutes / 60);
+        const timeDifferenceDays = Math.floor(timeDifferenceHours / 24);
+        $recordTime.textContent =
+          timeDifferenceSeconds < 60
+            ? `${timeDifferenceSeconds}초 전`
+            : timeDifferenceMinutes < 60
+            ? `${timeDifferenceMinutes}분 전`
+            : timeDifferenceHours < 24
+            ? `${timeDifferenceHours}시간 전`
+            : `${timeDifferenceDays}일 전`;
+        if ($record.querySelector('p')) {
+          $record.querySelector('p').remove();
+        }
+        $record.append($recordTime);
+        $activityMain.append($record);
+      });
+    });
+
+    const $activityCloseButton = this.shadowRoot.querySelector(
+      '.activity__close-button'
+    );
+    $activityCloseButton.addEventListener('click', (event) => {
+      $activity.style.display = 'none';
+      $activityMain.innerHTML = '';
     });
   }
   disconnectedCallback() {}
