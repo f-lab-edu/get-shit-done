@@ -172,7 +172,11 @@ export default class TodoItem extends HTMLElement {
       $modalOuter.style.display = 'none';
       $modalInner.querySelector('.modal-input').value = this.dataset.itemTitle;
     });
-
+    $modalOuter.addEventListener('click', (event) => {
+      $modalInner.style.display = 'none';
+      $modalOuter.style.display = 'none';
+      $modalInner.querySelector('.modal-input').value = this.dataset.itemTitle;
+    });
     // 5. 모달 창 save button 클릭 시 내용 변경
     const $modalSaveButton =
       this.shadowRoot.querySelector('.modal-save-button');

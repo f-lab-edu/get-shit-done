@@ -166,6 +166,11 @@ export default class TodoToolbar extends HTMLElement {
       $modalInner.style.display = 'none';
       $modalInput.value = this.dataset.containerTitle;
     });
+    $modalOuter.addEventListener('click', (event) => {
+      $modalOuter.style.display = 'none';
+      $modalInner.style.display = 'none';
+      $modalInput.value = this.dataset.containerTitle;
+    });
     $modalUpdateButton.addEventListener('click', (event) => {
       $modalOuter.style.display = 'none';
       $modalInner.style.display = 'none';
