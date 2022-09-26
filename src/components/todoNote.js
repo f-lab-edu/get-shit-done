@@ -13,20 +13,22 @@ export default class TodoNote extends HTMLElement {
     return `
         <style>
           :host {
+            width: 90%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 0 5px;            
+            padding: 0 5px;
+            margin: 0 auto;
           }
           .note-input {
             width: 90%;
           }
           .note-buttons {
+            width: 90%;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            width: 90%;
             padding: 5px;
           }
           .note-add-button {

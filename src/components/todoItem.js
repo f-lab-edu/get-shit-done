@@ -170,6 +170,7 @@ export default class TodoItem extends HTMLElement {
     $modalCloseButton.addEventListener('click', (event) => {
       $modalInner.style.display = 'none';
       $modalOuter.style.display = 'none';
+      $modalInner.querySelector('.modal-input').value = this.dataset.itemTitle;
     });
 
     // 5. 모달 창 save button 클릭 시 내용 변경
@@ -182,6 +183,15 @@ export default class TodoItem extends HTMLElement {
       $modalOuter.style.display = 'none';
       $itemContent.textContent = $modalInput.value;
     });
+
+    // 6. 드래그 앤 드랍
+    this.setAttribute('draggable', 'true');
+
+    function onDragStart(event) {
+      event.currentTarget.style.backgroundColor = 'yellow';
+    }
+
+    this.addEventListener('dragstart', onDragStart);
   }
   disconnectedCallback() {}
 

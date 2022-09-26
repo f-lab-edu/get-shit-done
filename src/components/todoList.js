@@ -12,19 +12,25 @@ export default class TodoList extends HTMLElement {
   getTemplate() {
     return `
         <style>
-        :host {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          margin: 0 auto;
-        }
+          :host {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin: 0 auto;
+          }
         </style>
-        
     `;
   }
 
-  connectedCallback() {}
+  connectedCallback() {
+    // 1. 드래그 앤 드랍
+    function onDragOver(event) {
+      event.preventDefault();
+    }
+
+    this.addEventListener('dragover', onDragOver);
+  }
   disconnectedCallback() {}
 
   static get observedAttributes() {

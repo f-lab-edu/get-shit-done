@@ -24,7 +24,7 @@ export default class TodoContainer extends HTMLElement {
           }
         </style>
         <todo-toolbar class="todo-toolbar" data-container-title="${this.dataset.containerTitle}"></todo-toolbar>
-        <todo-note data-container-title="${this.dataset.containerTitle}"></todo-note>
+        <todo-note class="todo-note" data-container-title="${this.dataset.containerTitle}"></todo-note>
         <todo-list data-container-title="${this.dataset.containerTitle}"></todo-list>
     `;
   }
@@ -33,6 +33,9 @@ export default class TodoContainer extends HTMLElement {
     const containerTitle = this.dataset.containerTitle;
     const $toolBar = this.shadowRoot.querySelector('.todo-toolbar');
     $toolBar.dataset.containerTitle = containerTitle;
+
+    const $note = this.shadowRoot.querySelector('.todo-note');
+    $note.dataset.containerTitle = containerTitle;
   }
   disconnectedCallback() {}
 

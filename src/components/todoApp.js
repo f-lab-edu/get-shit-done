@@ -57,7 +57,11 @@ export default class TodoApp extends HTMLElement {
     );
     const $appMain = this.shadowRoot.querySelector('.main');
     $createContainerButton.addEventListener('click', (event) => {
-      const containerTitleInput = prompt('메모장 이름을 적어주세요. 💥');
+      const containerTitleInput = prompt(
+        '💥 (띄어쓰기 없이)메모장 이름을 적어주세요.'
+      )
+        .split(' ')
+        .join('');
       if (!containerTitleInput) return;
       const $newContainer = document.createElement('todo-container');
       $newContainer.dataset.containerTitle = containerTitleInput;
