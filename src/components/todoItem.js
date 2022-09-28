@@ -101,7 +101,7 @@ export default class TodoItem extends HTMLElement {
       <div class="item-information">
         <div class="item-content"></div>
         <div class="item-writer">
-          Added by <span class="writer">Jayden</span>
+          Written by <span class="writer">Jayden</span>
         </div>
       </div>
       <div class="item-delete-button">X</div>
@@ -121,6 +121,9 @@ export default class TodoItem extends HTMLElement {
   }
 
   connectedCallback() {
+    // 추가) 드래그 앤 드랍된 태그는 이벤트 중복되는 것 방지
+    if (this.className) return;
+
     // 1. item이 생성되고 DOM에 추가될 때 그 안에 텍스트를 바꿔주기
     this.shadowRoot.querySelector('.item-content').textContent =
       this.dataset.itemTitle;
@@ -156,7 +159,7 @@ export default class TodoItem extends HTMLElement {
       // 2-3. 활동 기록에 삭제 활동 추가
       const $record = document.createElement('div');
       $record.className = 'record';
-      $record.innerHTML = `<span class="record-important">@Jayden</span> deleted <span class="record-important">${this.dataset.itemTitle}</span> from <b>${this.dataset.containerTitle}</b>`;
+      $record.innerHTML = `<span class="record-important">@Jayden</span> deleted <span class="record-item">${this.dataset.itemTitle}</span> from <span class="record-container">${this.dataset.containerTitle}</span>`;
 
       const now = Date.now();
       $record.dataset.timeMakeNote = now;
@@ -182,11 +185,7 @@ export default class TodoItem extends HTMLElement {
       $modalOuter.style.display = 'none';
       $modalInner.querySelector('.modal-input').value = this.dataset.itemTitle;
     });
-    $modalCloseButton.addEventListener('click', (event) => {
-      $modalInner.style.display = 'none';
-      $modalOuter.style.display = 'none';
-      $modalInner.querySelector('.modal-input').value = this.dataset.itemTitle;
-    });
+
     // 5. 모달 창 save button 클릭 시 내용 변경
     const $modalSaveButton =
       this.shadowRoot.querySelector('.modal-save-button');
@@ -199,7 +198,7 @@ export default class TodoItem extends HTMLElement {
       // 5-1. 활동 기록에 수정 활동 추가
       const $record = document.createElement('div');
       $record.className = 'record';
-      $record.innerHTML = `<span class="record-important">@Jayden</span> changed <b>${$itemContent.textContent}</b> to <span class="record-important">${$modalInput.value}</span> in <b>${this.dataset.containerTitle}</b>`;
+      $record.innerHTML = `<span class="record-important">@Jayden</span> changed <span class="record-item">${$itemContent.textContent}</span> to <span class="record-item">${$modalInput.value}</span> in <span class="record-container">${this.dataset.containerTitle}</span>`;
 
       const now = Date.now();
       $record.dataset.timeMakeNote = now;
@@ -211,11 +210,74 @@ export default class TodoItem extends HTMLElement {
     // 6. 드래그 앤 드랍
     this.setAttribute('draggable', 'true');
 
-    function onDragStart(event) {
-      event.currentTarget.style.backgroundColor = 'yellow';
-    }
+    this.addEventListener('dragstart', (event) => {
+      const containerTitle = event.target.dataset.containerTitle;
+      const itemTitle = event.target.dataset.itemTitle;
+      const $todoApp = document.querySelector('todo-app');
+      const $targetContainer = $todoApp.shadowRoot.querySelector(
+        `[data-container-title=${containerTitle}]`
+      );
+      const $targetList =
+        $targetContainer.shadowRoot.querySelector('todo-list');
+      event.target.classList.add('drag-target', 'already');
+      $targetList.classList.add('drag-target');
+      $targetContainer.classList.add('drag-target');
+    });
 
-    this.addEventListener('dragstart', onDragStart);
+    this.addEventListener('drop', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const $todoApp = document.querySelector('todo-app');
+      const $targetContainer =
+        $todoApp.shadowRoot.querySelector('.drag-target');
+      const $targetList =
+        $targetContainer.shadowRoot.querySelector('.drag-target');
+      const $targetItem = $targetList.shadowRoot.querySelector('.drag-target');
+      $targetItem.remove();
+      const dropTargetClientTop = event.target.getBoundingClientRect().top;
+      const dropTargetClientBottom =
+        event.target.getBoundingClientRect().bottom;
+      const dropTargetClientMiddle =
+        (dropTargetClientTop + dropTargetClientBottom) / 2;
+      if (event.clientY < dropTargetClientMiddle) {
+        event.target.parentNode.insertBefore($targetItem, event.target);
+      } else {
+        event.target.parentNode.insertBefore(
+          $targetItem,
+          event.target.nextElementSibling
+        );
+      }
+      $targetItem.dataset.containerTitle = event.target.dataset.containerTitle;
+
+      const $targetToolbar =
+        $targetContainer.shadowRoot.querySelector('todo-toolbar');
+      const $noteCountBefore =
+        $targetToolbar.shadowRoot.querySelector('.count-item');
+      $noteCountBefore.textContent = +$noteCountBefore.textContent - 1;
+
+      const $noteCountAfter = document
+        .querySelector('todo-app')
+        .shadowRoot.querySelector(
+          `[
+            data-container-title=${event.target.dataset.containerTitle}
+          ]`
+        )
+        .shadowRoot.querySelector('todo-toolbar')
+        .shadowRoot.querySelector('.count-item');
+      $noteCountAfter.textContent = +$noteCountAfter.textContent + 1;
+
+      const $record = document.createElement('div');
+      $record.className = 'record';
+      $record.innerHTML = `<span class="record-important">@Jayden</span> moved <span class="record-item">${$targetItem.dataset.itemTitle}</span> to <span class="record-container">${event.target.dataset.containerTitle}</span> from <span class="record-container">${$targetContainer.dataset.containerTitle}</span>`;
+
+      const now = Date.now();
+      $record.dataset.timeMakeNote = now;
+      activityLog.push($record);
+
+      $targetContainer.classList.remove('drag-target');
+      $targetList.classList.remove('drag-target');
+      $targetItem.classList.remove('drag-target');
+    });
   }
   disconnectedCallback() {}
 

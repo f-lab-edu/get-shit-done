@@ -53,7 +53,6 @@ export class TodoApp extends HTMLElement {
           padding: 1vh 1vw;
           background-color: #f1f1f1;
           z-index: 1;
-
         }
         .activity__header {
           width: 100%;
@@ -83,6 +82,14 @@ export class TodoApp extends HTMLElement {
         .record-important {
           font-weight: bold;
           color: #00c471;
+        }
+        .record-container {
+          font-weight: bold;
+          color: #0064FF;
+        }
+        .record-item {
+          font-weight: bold;
+          color: #fb3e4a;
         }
         .record-time {
           color: #d3d3d3;

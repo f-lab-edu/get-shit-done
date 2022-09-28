@@ -83,7 +83,7 @@ export default class TodoNote extends HTMLElement {
       // 1-4. Add 사용자 활동 기록
       const $record = document.createElement('div');
       $record.className = 'record';
-      $record.innerHTML = `<span class="record-important">@Jayden</span> added <span class="record-important">${$noteInput.value}</span> to <b>${this.dataset.containerTitle}</b>`;
+      $record.innerHTML = `<span class="record-important">@Jayden</span> added <span class="record-item">${$noteInput.value}</span> at <span class="record-container">${this.dataset.containerTitle}</span>`;
 
       const now = Date.now();
       $record.dataset.timeMakeNote = now;
